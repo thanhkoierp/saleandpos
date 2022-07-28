@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_partner_koi_website_view_form" model="ir.ui.view">
+        <field name="name">res.partner.koi.website.view.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group//field[@name='street2']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group//field[@name='city']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group//field[@name='state_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group//field[@name='zip']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group//field[@name='street2']" position="after">
+                <div class="o_address_format">
+                    <field name="province_id" placeholder="Tỉnh/Thành phố....." class="o_address_street"/>
+                    <field name="district_id" placeholder="Quận/Huyện....." class="o_address_street" domain="[('province_id', '=', province_id)]"/>
+                    <field name="ward_id" placeholder="Phường/Xã....." class="o_address_street" domain="[('district_id', '=', district_id)]"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//sheet//notebook//page[@name='internal_notes']" position="after">
+                <page string="Address core">
+                    <group>
+                        <group>
+                            <div class="o_address_format">
+                            <field name="street" placeholder="Street..." class="o_address_street"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="city" placeholder="City" class="o_address_city"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                        </div>
+                        </group>
+                        <group></group>
+                    </group>
+                </page>
+                <page string="Code Image">
+                    <group>
+                        <group>
+                           <field name="barcode_img" widget="image"/>
+                        </group>
+                        <group>
+                            <field name="qrcode_img" widget="image"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object" string="Generate barcode" class="oe_stat_button" name="generate_barcode_im" icon="fa-plus"/>
+                <button type="object" string="Generate QR" class="oe_stat_button" name="generate_qrcode_im" icon="fa-plus"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
