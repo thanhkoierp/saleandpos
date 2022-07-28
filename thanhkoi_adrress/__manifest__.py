@@ -10,7 +10,6 @@
     'description': """""",
     'depends': [
         'sale',
-        'as_vn_address',
         'base',
         'product'
     ],
