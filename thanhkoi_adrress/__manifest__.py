@@ -18,4 +18,6 @@
         'views/sale_order_view.xml',
     ],
     'application': True,
+    'price': 10,
+    'currency': 'USD'
 }
